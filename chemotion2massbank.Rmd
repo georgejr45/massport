@@ -1,0 +1,203 @@
+---
+title: "chemotion2massbank"
+author: "Methun George"
+date: "2025-07-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r cars}
+
+```
+
+
+
+```{r}
+library(httr)
+library(jsonlite)
+
+# Define URL and query parameters
+url <- "https://www.chemotion-repository.net/api/v1/public/download/list"
+params <- list(
+  kind = "MS",
+  type = "Sample",
+  offset = 0,
+  limit = 100,
+  date_from = "1990-01-01",
+  date_to = "2025-05-31",
+  tracking = "false"
+)
+
+# Make the GET request
+res <- GET(url, query = params)
+
+```
+
+
+
+```{r}
+# Additional commands to extract the data
+
+gsub(".*/([0-9]+)\\?.*", "\\1", url2)
+
+sapply(unlist(content(res)$publications), function(url2) {})
+
+dummy <-  sapply(unlist(content(res)$publications), function(url2) {})
+
+
+content(res)$publications
+unlist(content(res)$publications)
+unlist(content(res)$publications)[1]
+
+```
+
+
+```{r}
+# extract the data (Limited to 100)
+
+# Libraries
+library (httr)
+library(jsonlite)
+library(utils)
+
+
+# API call 
+url <- "https://www.chemotion-repository.net/api/v1/public/download/list"
+params <- list(
+  kind = "MS",
+  type = "Sample",
+  offset = 0,
+  limit = 100,
+  date_from = "1990-01-01",
+  date_to = "2025-05-31",
+  tracking = "false"
+)
+
+# GIT request
+res <- GET(url, query = params)
+data <- content(res, as = "parsed", simplifyVecotr = TRUE)
+
+# Extract the Publication URL
+pub_urls <- unlist(data$publications)
+
+# Extract IDs from the URL
+ids <- sapply(pub_urls, function(id) {
+  gsub(".*/([0-9]+)\\?.*", "\\1", id)
+})
+
+# Download , Unzip and Save
+dir.create("chemotion_data", showWarnings = FALSE)
+fail_count <- 0
+max_fails <- 100
+
+for (i in seq_along(ids)) {
+  tryCatch({
+    id <- ids[i]
+    download_url <- paste0("https://www.chemotion-repository.net/api/v1/public/download/bagit/", id, "?kind=MS&tracking=false")
+    
+    #Define output path 
+    zip_file <- file.path("chemotion_data", paste0(id, ".zip"))
+    out_dir <- file.path("chemotion_data", id)
+    
+    #Download the zip file
+    download.file(download_url, destfile = zip_file, mode = "wb")
+    
+    #unzip to folder named by ID
+    unzip(zip_file, exdir = out_dir)
+    
+    # delete the zipped file
+    file.remove(zip_file)
+    
+    cat(paste("downloaded and extracted the ID", id, "\n"))
+    Sys.sleep(1)
+    
+  }, error = function(e) {
+    cat(paste("Failed to download id:", ids[i], "\n"))
+    fail_count <<- fail_count + 1
+    if (fail_count >= max_fails) {
+      cat("Finished / Reached maximum fails")
+      break
+    }
+  })
+}
+
+
+```
+
+
+
+```{r}
+# extract the data (ALL)
+
+# Libraries
+library (httr)
+library(jsonlite)
+library(utils)
+
+
+# API call 
+url <- "https://www.chemotion-repository.net/api/v1/public/download/list"
+params <- list(
+  kind = "MS",
+  type = "Sample",
+  offset = 0,
+  limit = 100,
+  date_from = "1990-01-01",
+  date_to = "2025-05-31",
+  tracking = "false"
+)
+
+# GIT request
+res <- GET(url, query = params)
+data <- content(res, as = "parsed", simplifyVecotr = TRUE)
+
+# Extract the Publication URL
+pub_urls <- unlist(data$publications)
+
+# Extract IDs from the URL
+ids <- sapply(pub_urls, function(id) {
+  gsub(".*/([0-9]+)\\?.*", "\\1", id)
+})
+
+# Download , Unzip and Save
+dir.create("chemotion_data", showWarnings = FALSE)
+fail_count <- 0
+max_fails <- 100
+
+for (i in seq_along(ids)) {
+  tryCatch({
+    id <- ids[i]
+    download_url <- paste0("https://www.chemotion-repository.net/api/v1/public/download/bagit/", id, "?kind=MS&tracking=false")
+    
+    #Define output path 
+    zip_file <- file.path("chemotion_data", paste0(id, ".zip"))
+    out_dir <- file.path("chemotion_data", id)
+    
+    #Download the zip file
+    download.file(download_url, destfile = zip_file, mode = "wb")
+    
+    #unzip to folder named by ID
+    unzip(zip_file, exdir = out_dir)
+    
+    # delete the zipped file
+    file.remove(zip_file)
+    
+    cat(paste("downloaded and extracted the ID", id, "\n"))
+    Sys.sleep(1)
+    
+  }, error = function(e) {
+    cat(paste("Failed to download id:", ids[i], "\n"))
+    fail_count <<- fail_count + 1
+    if (fail_count >= max_fails) {
+      cat("Finished / Reached maximum fails")
+      break
+    }
+  })
+}
+
+```
+
