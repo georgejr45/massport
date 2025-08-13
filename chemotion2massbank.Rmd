@@ -10,10 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r cars}
-
-```
-
 
 
 ```{r}
@@ -131,7 +127,7 @@ for (i in seq_along(ids)) {
 
 
 ```{r}
-# extract the data (ALL)
+# extract the data (ALL and Final version)
 
 # Libraries
 library (httr)
@@ -198,6 +194,11 @@ for (i in seq_along(ids)) {
     }
   })
 }
+
+```
+
+
+```{r}
 
 ```
 
