@@ -198,7 +198,7 @@ for (i in seq_along(ids)) {
 ```
 
 
-```{r}
+```{sh}
 # Extras to use in command line(optional)
 # Command used to get the file extensions with counts (chemotion)
 $  find $PWD | grep "\." | grep '/dataset' | rev | cut -d. -f 1 | rev | sort | uniq -c | sort -n
