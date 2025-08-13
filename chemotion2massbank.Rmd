@@ -205,7 +205,7 @@ $  find $PWD | grep "\." | grep '/dataset' | rev | cut -d. -f 1 | rev | sort | u
 
 # command to fetch the zip files and findding out the zipped secrets
 find /home/mgeorge/testproject/chemotion_data -type f -name "*.zip" | while read zipfile; do
-    unzip -oq "$zipfile" -d /home/mgeorge/testproject/unzipped
+    unzip -oq -d /home/mgeorge/testproject/unzipped/${zipfile%.zip} "$zipfile" 
 done
 
 
