@@ -203,7 +203,7 @@ for (i in seq_along(ids)) {
 # Command used to get the file extensions with counts (chemotion)
 $  find $PWD | grep "\." | grep '/dataset' | rev | cut -d. -f 1 | rev | sort | uniq -c | sort -n
 
-# command to fetch the zip files and findding out the zipped secrets
+# command to fetch the zip files and finding out the zipped secrets
 find /home/mgeorge/testproject/chemotion_data -type f -name "*.zip" | while read zipfile; do
     unzip -oq -d /home/mgeorge/testproject/unzipped/${zipfile%.zip} "$zipfile" 
 done
