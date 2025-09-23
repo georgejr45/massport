@@ -211,3 +211,8 @@ done
 
 ```
 
+```{sh}
+# Convert to mzml,  download the converter.sh script and perform
+bash converter.sh  /home/mgeorge/testproject/files_4_MS_converter/  /home/mgeorge/testproject/converted_data
+
+```
